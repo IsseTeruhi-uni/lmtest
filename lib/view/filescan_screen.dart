@@ -113,23 +113,23 @@ class _GalleryScreenState extends State<GalleryScreen> {
                 children: [
                   const Row(),
                   if (image != null) ...[
-                    // Show model information
-                    if (imageClassificationHelper?.inputTensor != null)
-                      Text(
-                        'Input: (shape: ${imageClassificationHelper?.inputTensor.shape} type: '
-                        '${imageClassificationHelper?.inputTensor.type})',
-                      ),
-                    if (imageClassificationHelper?.outputTensor != null)
-                      Text(
-                        'Output: (shape: ${imageClassificationHelper?.outputTensor.shape} '
-                        'type: ${imageClassificationHelper?.outputTensor.type})',
-                      ),
-                    const SizedBox(height: 8),
-                    // Show picked image information
-                    Text('Num channels: ${image?.numChannels}'),
-                    Text('Bits per channel: ${image?.bitsPerChannel}'),
-                    Text('Height: ${image?.height}'),
-                    Text('Width: ${image?.width}'),
+                    // // Show model information
+                    // if (imageClassificationHelper?.inputTensor != null)
+                    //   Text(
+                    //     'Input: (shape: ${imageClassificationHelper?.inputTensor.shape} type: '
+                    //     '${imageClassificationHelper?.inputTensor.type})',
+                    //   ),
+                    // if (imageClassificationHelper?.outputTensor != null)
+                    //   Text(
+                    //     'Output: (shape: ${imageClassificationHelper?.outputTensor.shape} '
+                    //     'type: ${imageClassificationHelper?.outputTensor.type})',
+                    //   ),
+                    // const SizedBox(height: 8),
+                    // // Show picked image information
+                    // Text('Num channels: ${image?.numChannels}'),
+                    // Text('Bits per channel: ${image?.bitsPerChannel}'),
+                    // Text('Height: ${image?.height}'),
+                    // Text('Width: ${image?.width}'),
                   ],
                   const Spacer(),
                   // Show classification result
