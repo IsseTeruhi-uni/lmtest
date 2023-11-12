@@ -5,6 +5,7 @@ import 'package:image/image.dart' as image_lib;
 import 'package:localmltester/image_utils.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
+//画像の前処理と推論を行うクラス
 class IsolateInference {
   static const String _debugName = "TFLITE_INFERENCE";
   final ReceivePort _receivePort = ReceivePort();
@@ -12,18 +13,20 @@ class IsolateInference {
   late SendPort _sendPort;
 
   SendPort get sendPort => _sendPort;
-
+  // IsolateInferenceの初期化
   Future<void> start() async {
     _isolate = await Isolate.spawn<SendPort>(entryPoint, _receivePort.sendPort,
         debugName: _debugName);
     _sendPort = await _receivePort.first;
   }
 
+  // IsolateInferenceの終了
   Future<void> close() async {
     _isolate.kill();
     _receivePort.close();
   }
 
+  // 推論を行う
   static void entryPoint(SendPort sendPort) async {
     final port = ReceivePort();
     sendPort.send(port.sendPort);
