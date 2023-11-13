@@ -1,17 +1,17 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
 import '../helper/image_classification_helper.dart';
 
-class GalleryScreen extends StatefulWidget {
-  const GalleryScreen({super.key});
-
+class FileScanScreen extends ConsumerStatefulWidget {
+  const FileScanScreen({Key? key}) : super(key: key);
   @override
-  State<GalleryScreen> createState() => _GalleryScreenState();
+  FileScanScreenState createState() => FileScanScreenState();
 }
 
-class _GalleryScreenState extends State<GalleryScreen> {
+class FileScanScreenState extends ConsumerState<FileScanScreen> {
   ImageClassificationHelper? imageClassificationHelper;
   final imagePicker = ImagePicker();
   String? imagePath;
@@ -34,13 +34,10 @@ class _GalleryScreenState extends State<GalleryScreen> {
     setState(() {});
   }
 
-  // Process picked image
   Future<void> processImage() async {
     if (imagePath != null) {
       // Read image bytes from file
       final imageData = File(imagePath!).readAsBytesSync();
-
-      // Decode image using package:image/image.dart (https://pub.dev/image)
       image = img.decodeImage(imageData);
       setState(() {});
       classification = await imageClassificationHelper?.inferenceImage(image!);
