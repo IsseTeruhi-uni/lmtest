@@ -1,28 +1,22 @@
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:localmltester/helper/image_classification_helper.dart';
 
-class CameraScreen extends StatefulWidget {
-  const CameraScreen({
-    super.key,
-    required this.camera,
-  });
-
+class LiveScanScreen extends ConsumerStatefulWidget {
   final CameraDescription camera;
-
+  const LiveScanScreen({Key? key, required this.camera}) : super(key: key);
   @override
-  State<StatefulWidget> createState() => CameraScreenState();
+  LiveScanScreenState createState() => LiveScanScreenState();
 }
 
-class CameraScreenState extends State<CameraScreen>
+class LiveScanScreenState extends ConsumerState<LiveScanScreen>
     with WidgetsBindingObserver {
   late CameraController cameraController;
   late ImageClassificationHelper imageClassificationHelper;
   Map<String, double>? classification;
-  bool _isProcessing = false;
-
-  // init camera
+  bool isProcessing = false;
   initCamera() {
     cameraController = CameraController(widget.camera, ResolutionPreset.medium,
         imageFormatGroup: Platform.isIOS
@@ -38,13 +32,13 @@ class CameraScreenState extends State<CameraScreen>
 
   Future<void> imageAnalysis(CameraImage cameraImage) async {
     // if image is still analyze, skip this frame
-    if (_isProcessing) {
+    if (isProcessing) {
       return;
     }
-    _isProcessing = true;
+    isProcessing = true;
     classification =
         await imageClassificationHelper.inferenceCameraFrame(cameraImage);
-    _isProcessing = false;
+    isProcessing = false;
     if (mounted) {
       setState(() {});
     }
